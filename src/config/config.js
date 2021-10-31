@@ -21,11 +21,10 @@ module.exports = {
     dialect: 'mssql',
   },
   production: {
-    host: env.DB_HOST,
-    port: env.DB_PORT,
     username: env.DB_USER,
     password: env.DB_PASSWORD,
     database: env.DB_NAME,
+    host: env.DB_HOST,
     dialect: 'mssql',
     dialectModule: tedious,
     dialectOptions: {
