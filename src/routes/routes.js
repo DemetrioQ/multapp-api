@@ -10,7 +10,7 @@ const env = process.env;
 router.use(function authenticate(req, res, next) {
   const apiKey = req.query.api_key;
   if (!apiKey || apiKey !== env.ApiKey) {
-    res.send({ Message: 'Not authorized' });
+    res.status(401).send({ Message: 'Not authorized' });
   } else {
     next();
   }
