@@ -8,7 +8,6 @@ const env = process.env;
 
 // middleware that is specific to this router
 router.use(function authenticate(req, res, next) {
-  console.log('Working....');
   const apiKey = req.query.api_key;
   if (!apiKey || apiKey !== env.ApiKey) {
     res.send({ Message: 'Not authorized' });
@@ -27,7 +26,6 @@ router.get('/all', async (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  console.log('Searching...');
   userController.userLogin(req, res);
 });
 
