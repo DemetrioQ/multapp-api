@@ -1,6 +1,7 @@
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const env = process.env;
+const tedious = require('tedious');
 
 module.exports = {
   development: {
@@ -26,6 +27,7 @@ module.exports = {
     password: env.DB_PASSWORD,
     database: env.DB_NAME,
     dialect: 'mssql',
+    dialectModule: tedious,
     dialectOptions: {
       ssl: {
         require: true,
