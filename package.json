@@ -1,0 +1,33 @@
+{
+  "name": "multapp-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "pkg": "^5.4.0",
+    "sequelize": "^6.8.0"
+  },
+  "bin": "index.js",
+  "pkg": {
+    "scripts": [
+      "node_modules/tedious/lib/tedious.js",
+      "models/*.js"
+    ],
+    "assets": [
+      "config/log.json"
+    ]
+  },
+  "devDependencies": {
+    "tedious": "^14.0.0"
+  }
+}
