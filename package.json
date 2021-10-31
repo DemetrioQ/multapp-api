@@ -19,19 +19,7 @@
     "express": "^4.17.1",
     "mssql": "^7.2.1",
     "pkg": "^5.4.0",
-    "sequelize": "^6.8.0"
-  },
-  "bin": "index.js",
-  "pkg": {
-    "scripts": [
-      "node_modules/tedious/lib/tedious.js",
-      "models/*.js"
-    ],
-    "assets": [
-      "config/log.json"
-    ]
-  },
-  "devDependencies": {
+    "sequelize": "^6.8.0",
     "tedious": "^14.0.0"
   }
 }
