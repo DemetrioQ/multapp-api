@@ -13,15 +13,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-// app.all('*', (req, res, next) =>{
-//   auth = authenticate(req.query.api_key);
-//   if(!auth){
-//     res.send({"Message": "Not authorized"})
-//   }
-//   next()
-// })
 
-app.use('/api', routes);
+
+app.use('/', routes);
 
 app.listen(PORT, () => {
   console.log(`Server listeniong on ${PORT}`);
