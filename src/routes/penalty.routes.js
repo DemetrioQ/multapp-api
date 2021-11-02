@@ -15,5 +15,10 @@ router.get('/all', (req, res) => {
   penaltyController.getPenalties(req, res);
 });
 
+router.get('/user', (req, res) => {
+  penaltyController.getUserPenalties(req, res);
+});
+
+
 
 module.exports = router;
