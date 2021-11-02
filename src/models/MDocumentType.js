@@ -1,15 +1,11 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('MDocumentType', {
+  return sequelize.define('DocumentType', {
     Id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
-    },
-    Title: {
-      type: DataTypes.STRING(50),
-      allowNull: false
     },
     Description: {
       type: DataTypes.STRING(255),
