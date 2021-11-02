@@ -31,7 +31,6 @@ exports.getPenalties = (req, res) => {
     penalties.forEach((element) => {
       console.log(element.dataValues);
       delete element.dataValues.CreatedDate;
-      delete element.dataValues.Id;
     });
     res.send(penalties);
   });
