@@ -10,18 +10,30 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         autoIncrement: true,
       },
-      Username: {
-        type: DataTypes.STRING(50),
+      PersonId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
-      },
-      Password: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
+        references: {
+          model: 'Person',
+          key: 'Id',
+        },
       },
       UserTypeId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: 'MUserType',
+          key: 'Id',
+        },
+      },
+      Username: {
+        type: DataTypes.STRING(50),
+        allowNull: true,
+        unique: true,
+      },
+      Password: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
       },
       Locked: {
         type: DataTypes.BOOLEAN,
