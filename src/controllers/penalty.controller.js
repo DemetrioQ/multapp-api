@@ -1,5 +1,6 @@
+const Person = require('../models').Person;
 const Penalty = require('../models').Penalty;
-const PenaltyType = require('../models').MPenaltyType;
+const PenaltyType = require('../models').PenaltyType;
 
 //create penalty
 exports.createPenalty = (req, res) => {
@@ -27,13 +28,24 @@ exports.createPenalty = (req, res) => {
 };
 
 exports.getPenalties = (req, res) => {
-  PenaltyType.findAll().then((penalties) => {
-    penalties.forEach((element) => {
-      console.log(element.dataValues);
-      delete element.dataValues.CreatedDate;
-    });
+  PenaltyType.findAll({ attributes: { exclude: ['CreatedDate'] } }).then((penalties) => {
     res.send(penalties);
   });
-}
+};
+
+exports.getUserPenalties = (req, res) => {
+  Penalty.findAll({
+    include: [
+      {
+        model: Person,
+      },
+      {
+        model: PenaltyType,
+      },
+    ],
+  }).then((penalties) => {
+    res.send(penalties);
+  });
+};
 
 // delete user.dataValues.Password;

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('MPenaltyType', {
+  return sequelize.define('PenaltyType', {
     Id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
