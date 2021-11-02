@@ -7,16 +7,16 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    Title: {
-      type: DataTypes.STRING(50),
+    Law: {
+      type: DataTypes.STRING(75),
       allowNull: false
     },
     Description: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    Enabled: {
-      type: DataTypes.BOOLEAN,
+    Price: {
+      type: DataTypes.DECIMAL(19,4),
       allowNull: false,
       defaultValue: true
     },
