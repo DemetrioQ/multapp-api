@@ -7,16 +7,22 @@ exports.userLogin = (req, res) => {
     password: req.body.password,
   };
 
-  AppUser.findOne({ where: { Username: appUser.username }, attributes: { exclude: ['Id', 'Locked', 'LockedDate', 'Authorized', 'AuthorizedDate', 'CreatedDate'] } }).then((user) => {
-    if (!user) {
-      res.status(401).send({ error: 'The username or password is incorrect' });
-    }
-    if (!AppUser.verifyPassword(appUser.password, user.Password)) {
-      res.status(401).send({ error: 'The username or password is incorrect' });
-    }
-    delete user.dataValues.Password
-    res.send(user.dataValues);
-  });
+  AppUser.findOne({ where: { Username: appUser.username }, attributes: { exclude: ['Id', 'Locked', 'LockedDate', 'Authorized', 'AuthorizedDate', 'CreatedDate'] } })
+    .then((user) => {
+      if (!user) {
+        res.status(401).send({ error: 'The username or password is incorrect' });
+      }
+      if (!AppUser.verifyPassword(appUser.password, user.Password)) {
+        res.status(401).send({ error: 'The username or password is incorrect' });
+      }
+      delete user.dataValues.Password;
+      res.send(user.dataValues);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || 'Some error occurred while searching the User.',
+      });
+    });
 };
 
 exports.registerUser = (req, res) => {
