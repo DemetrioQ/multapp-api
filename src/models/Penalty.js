@@ -6,15 +6,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    Seq: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      autoIncrement: true
-    },
-    Code: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
     PersonId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -35,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    AddressLine1: {
+    Address: {
       type: DataTypes.STRING(500),
       allowNull: true
     },
@@ -46,10 +37,6 @@ module.exports = function(sequelize, DataTypes) {
         model: 'MProvince',
         key: 'Id'
       }
-    },
-    PenaltyDate: {
-      type: DataTypes.DATE,
-      allowNull: false
     },
     Paid: {
       type: DataTypes.BOOLEAN,

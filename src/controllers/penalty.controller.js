@@ -4,31 +4,42 @@ const PenaltyType = require('../models').PenaltyType;
 
 //create penalty
 exports.createPenalty = (req, res) => {
-  if (!req.body.username || !req.body.password || !req.body.typeid) {
+  console.log(req.body)
+  const penalty = {
+    PersonId: req.body.PersonId,
+    PenaltyTypeId: req.body.PenaltyTypeId,
+    ProvidenceId: req.body.ProvidenceId,
+    Description: req.body.Description,
+    Address: req.body.Address,
+  };
+  
+  if (!Object.values(penalty).every((o) => o !== null)) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
     return;
   }
-  const penalty = {
-    Username: req.body.username,
-    Password: req.body.password,
-    UserTypeId: req.body.typeid,
-  };
-
-  AppUser.create(user)
-    .then((user) => {
-      res.send({ success: true, user: user });
+  
+  console.log(penalty);
+  Penalty.create(penalty)
+    .then((penalty) => {
+      res.send({ success: true, penalty: penalty });
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || 'Some error occurred while creating the User.',
+        message: err.message || 'Some error occurred while creating the Penalty.',
       });
     });
 };
 
-exports.getPenalties = (req, res) => {
+exports.getPenaltiesTypes = (req, res) => {
   PenaltyType.findAll({ attributes: { exclude: ['CreatedDate'] } }).then((penalties) => {
+    res.send(penalties);
+  });
+};
+
+exports.getPenalties = (req, res) => {
+  Penalty.findAll({ attributes: { exclude: ['CreatedDate'] } }).then((penalties) => {
     res.send(penalties);
   });
 };
