@@ -4,13 +4,12 @@ const PenaltyType = require('../models').PenaltyType;
 
 //create penalty
 exports.createPenalty = (req, res) => {
-  console.log(req.body)
   const penalty = {
-    PersonId: req.body.PersonId,
-    PenaltyTypeId: req.body.PenaltyTypeId,
-    ProvidenceId: req.body.ProvidenceId,
-    Description: req.body.Description,
-    Address: req.body.Address,
+    PersonId: req.body.personId,
+    PenaltyTypeId: req.body.penaltyTypeId,
+    ProvinceId: req.body.provinceId,
+    Description: req.body.description,
+    Address: req.body.address,
   };
   
   if (!Object.values(penalty).every((o) => o !== null)) {
@@ -19,8 +18,7 @@ exports.createPenalty = (req, res) => {
     });
     return;
   }
-  
-  console.log(penalty);
+
   Penalty.create(penalty)
     .then((penalty) => {
       res.send({ success: true, penalty: penalty });
