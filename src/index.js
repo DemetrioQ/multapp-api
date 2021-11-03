@@ -4,9 +4,10 @@ var routes = require('./routes/routes');
 var userRoutes = require('./routes/user.routes');
 var penaltyRoutes = require('./routes/penalty.routes');
 var personRoutes = require('./routes/person.routes');
+var provinceRoutes = require('./routes/province.routes');
 const path = require('path');
 var cors = require('cors');
-require('./config/db.relations')
+require('./config/db.relations');
 // const db = require('./models');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
@@ -22,6 +23,8 @@ app.use('/', routes);
 app.use('/api/user', userRoutes);
 app.use('/api/penalty', penaltyRoutes);
 app.use('/api/person', personRoutes);
+
+app.use('/api/province', provinceRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server listeniong on ${PORT}`);
