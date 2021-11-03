@@ -7,18 +7,9 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    Title: {
-      type: DataTypes.STRING(50),
-      allowNull: false
-    },
     Description: {
       type: DataTypes.STRING(255),
       allowNull: true
-    },
-    Enabled: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true
     },
     CreatedDate: {
       type: DataTypes.DATE,
