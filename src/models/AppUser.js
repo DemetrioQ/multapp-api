@@ -28,12 +28,12 @@ module.exports = function (sequelize, DataTypes) {
       },
       Username: {
         type: DataTypes.STRING(50),
-        allowNull: true,
+        allowNull: false,
         unique: true,
       },
       Password: {
         type: DataTypes.STRING(255),
-        allowNull: true,
+        allowNull: false,
       },
       Locked: {
         type: DataTypes.BOOLEAN,

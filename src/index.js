@@ -23,7 +23,6 @@ app.use('/', routes);
 app.use('/api/user', userRoutes);
 app.use('/api/penalty', penaltyRoutes);
 app.use('/api/person', personRoutes);
-
 app.use('/api/province', provinceRoutes);
 
 app.listen(PORT, () => {

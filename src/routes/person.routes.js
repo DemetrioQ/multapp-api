@@ -6,9 +6,12 @@ router.get('/', function (req, res) {
   res.send('Hello World! from person');
 });
 
+router.get('/document/:document', (req, res) => {
+  personController.getPersonByDocument(req, res);
+});
 
-router.get('/:document', (req, res) => {
-  personController.getPerson(req, res);
+router.get('/id/:id', (req, res) => {
+  personController.getPersonById(req, res);
 });
 
 module.exports = router;
