@@ -1,4 +1,4 @@
-const Province = require('../models').MProvince;
+const Province = require('../models').Province;
 //create and save user
 
 exports.getAllProvinces = (req, res) => {
