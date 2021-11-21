@@ -8,7 +8,6 @@ var provinceRoutes = require('./routes/province.routes');
 const path = require('path');
 var cors = require('cors');
 require('./config/db.relations');
-// const db = require('./models');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 const PORT = process.env.PORT || 3000;
