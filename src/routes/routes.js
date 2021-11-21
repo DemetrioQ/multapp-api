@@ -15,9 +15,4 @@ router.use(function authenticate(req, res, next) {
   }
 });
 
-// define the home page route
-router.get('/', function (req, res) {
-  res.send('Hello World!');
-});
-
 module.exports = router;
