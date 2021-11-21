@@ -40,13 +40,13 @@ exports.getPersonById = (req, res) => {
   Person.findOne({ where: { Id: id }, attributes: { exclude: ['DocumentTypeId', 'PersonTypeId', 'CreatedDate'] } })
     .then((person) => {
       if (!person) {
-        res.status(401).send({ error: 'Invalid Document' });
+        return res.status(401).send({ error: 'Invalid Document' });
       }
 
-      res.send(person);
+      return res.status(200).send(person);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || 'Some error occurred while searching the Person.',
       });
     });

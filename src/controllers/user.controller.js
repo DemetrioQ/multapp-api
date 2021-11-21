@@ -10,41 +10,42 @@ exports.userLogin = (req, res) => {
   AppUser.findOne({ where: { Username: appUser.username }, attributes: { exclude: ['Id', 'Locked', 'LockedDate', 'Authorized', 'AuthorizedDate', 'CreatedDate'] } })
     .then((user) => {
       if (!user) {
-        res.status(401).send({ error: 'The username or password is incorrect' });
+        return res.status(401).send({ error: 'The username or password is incorrect' });
       }
-      
+
       if (!AppUser.verifyPassword(appUser.password, user.Password) && appUser.password != user.Password) {
-        res.status(401).send({ error: 'The username or password is incorrect' });
+        return res.status(401).send({ error: 'The username or password is incorrect' });
       }
       delete user.dataValues.Password;
-      res.send(user.dataValues);
+      return res.send(user.dataValues);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || 'Some error occurred while searching the User.',
       });
     });
 };
 
 exports.registerUser = (req, res) => {
-  if (!req.body.username || !req.body.password || !req.body.typeid) {
-    res.status(400).send({
-      message: 'Content can not be empty!',
-    });
-    return;
-  }
   const user = {
+    PersonId: req.body.personId,
     Username: req.body.username,
     Password: req.body.password,
-    UserTypeId: req.body.typeid,
+    UserTypeId: 2,
   };
+
+  if (!Object.values(user).every((o) => o !== null)) {
+    return res.status(400).send({
+      message: 'Content can not be empty!',
+    });
+  }
 
   AppUser.create(user)
     .then((user) => {
-      res.send({ success: true, user: user });
+      return res.status(200).send(user);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || 'Some error occurred while creating the User.',
       });
     });

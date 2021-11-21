@@ -14,18 +14,17 @@ exports.createPenalty = (req, res) => {
   };
 
   if (!Object.values(penalty).every((o) => o !== null)) {
-    res.status(400).send({
+    return res.status(400).send({
       message: 'Content can not be empty!',
     });
-    return;
   }
 
   Penalty.create(penalty)
     .then((penalty) => {
-      res.send({ success: true, penalty: penalty });
+      return res.send(penalty);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || 'Some error occurred while creating the Penalty.',
       });
     });
@@ -33,17 +32,17 @@ exports.createPenalty = (req, res) => {
 
 exports.getPenaltiesTypes = (req, res) => {
   PenaltyType.findAll({ attributes: { exclude: ['CreatedDate'] } }).then((penalties) => {
-    res.send(penalties);
+    return res.status(200).send(penalties);
   });
 };
 
 exports.getPenalties = (req, res) => {
   Penalty.findAll({ attributes: { exclude: ['CreatedDate'] } })
     .then((penalties) => {
-      res.send(penalties);
+      return res.status(200).send(penalties);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || 'Some error occurred while creating the Penalty.',
       });
     });
@@ -61,10 +60,10 @@ exports.getUserPenalties = (req, res) => {
     ],
   })
     .then((penalties) => {
-      res.send(penalties);
+      return res.status(200).send(penalties);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || 'Some error occurred while creating the Penalty.',
       });
     });
@@ -81,12 +80,11 @@ exports.getPenaltiesByPersonId = (req, res) => {
     attributes: { exclude: ['Id', 'PersonId', 'PenaltyTypeId', 'ProvinceId'] },
   })
     .then((penalties) => {
-      res.send(penalties);
+      return res.status(200).send(penalties);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || 'Some error occurred while creating the Penalty.',
       });
     });
 };
-// delete user.dataValues.Password;
