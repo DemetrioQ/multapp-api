@@ -34,4 +34,7 @@ module.exports = {
       },
     },
   },
+  secret: env.secret,
+  user: env.emailUser,
+  pass: env.emailPassword,
 };
