@@ -36,6 +36,10 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
+      Email: {
+        type: DataTypes.STRING(320),
+        allowNull: false,
+      },
       Locked: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
@@ -57,7 +61,7 @@ module.exports = function (sequelize, DataTypes) {
       Enabled: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: true,
+        defaultValue: false,
       },
       CreatedDate: {
         type: DataTypes.DATE,
