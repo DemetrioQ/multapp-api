@@ -4,6 +4,7 @@ const PenaltyType = require('../models').PenaltyType;
 const DocumentType = require('../models').DocumentType;
 const PersonType = require('../models').PersonType;
 const Province = require('../models').Province;
+const AppUser = require('../models').AppUser;
 
 Person.hasMany(Penalty);
 Penalty.belongsTo(Person);
@@ -15,4 +16,6 @@ PersonType.hasOne(Person)
 Person.belongsTo(PersonType);
 Penalty.belongsTo(Province)
 Province.hasOne(Penalty);
+AppUser.belongsTo(Person);
+Person.hasOne(AppUser);
 
