@@ -62,13 +62,13 @@ exports.registerUser = (req, res) => {
         AppUserId: user.Id,
         Token: token_s,
       };
-
       Token.create(token)
         .then((data) => {
           nodemailer.sendConfirmationEmail(user.Username, user.Email, data.Token, req);
           return res.status(200).send(user);
         })
         .catch((err) => {
+          user.destroy();
           return res.status(500).send({
             message: err.message || 'Some error occurred while creating the User.',
           });
