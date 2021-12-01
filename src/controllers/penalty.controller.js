@@ -7,8 +7,8 @@ const Province = require('../models').Province;
 exports.createPenalty = (req, res) => {
   const penalty = {
     PersonId: req.body.personId,
-    PenaltyTypeId: req.body.penaltyTypeId,
-    ProvinceId: req.body.provinceId,
+    PenaltyTypeId: req.body.ley.id,
+    ProvinceId: req.body.provincia.id,
     Description: req.body.description,
     Address: req.body.address,
   };
