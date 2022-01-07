@@ -3,6 +3,12 @@ const Penalty = require('../models').Penalty;
 const PenaltyType = require('../models').PenaltyType;
 const Province = require('../models').Province;
 
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+const env = process.env;
+const stripeSecretKey = env.STRIPE_SECRET_KEY;
+const stripe = require('stripe')(stripeSecretKey);
+
 //create penalty
 exports.createPenalty = (req, res) => {
   const penalty = {
@@ -77,7 +83,7 @@ exports.getPenaltiesByPersonId = (req, res) => {
       { model: PenaltyType, attributes: { exclude: ['Id', 'CreatedDate'] } },
       { model: Province, attributes: { exclude: ['Id', 'CreatedDate'] } },
     ],
-    attributes: { exclude: ['Id', 'PersonId', 'PenaltyTypeId', 'ProvinceId'] },
+    attributes: { exclude: ['PenaltyTypeId', 'ProvinceId'] },
   })
     .then((penalties) => {
       return res.status(200).send(penalties);
@@ -88,3 +94,35 @@ exports.getPenaltiesByPersonId = (req, res) => {
       });
     });
 };
+
+exports.payPenalty = (req, res) => {
+  console.log(req.body);
+  Penalty.update({ Paid: true }, { where: { Id: req.body.multa.id } })
+    .then((result) => {
+      console.log(result);
+      stripe.charges
+        .create({
+          amount: req.body.amount * 100,
+          source: req.body.token,
+          currency: 'dop',
+        })
+        .then(() => {
+          console.log('Charge Successful');
+          res.status(200).send({message: "success"})
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log('Charge Fail');
+          res.status(500).end();
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send({ message: error });
+    });
+};
+// .then((result) =>
+//   res.status(200).send({ message: 'Successfully purchased items' });
+// ).catch((err) =>{
+//   res.status(500).send({message: "error"});
+// });

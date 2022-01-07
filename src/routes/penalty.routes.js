@@ -22,12 +22,13 @@ router.get('/:id', (req, res) => {
   penaltyController.getPenaltiesByPersonId(req, res);
 });
 
-// router.get('/user', (req, res) => {
-//   penaltyController.getUserPenalties(req, res);
-// });
 
 router.post('/create', (req, res) => {
   penaltyController.createPenalty(req, res);
+});
+
+router.post('/pay', (req, res) => {
+  penaltyController.payPenalty(req,res)
 });
 
 module.exports = router;

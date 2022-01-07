@@ -8,6 +8,8 @@ var provinceRoutes = require('./routes/province.routes');
 var authRoutes = require('./routes/auth.routes');
 const path = require('path');
 var cors = require('cors');
+
+
 require('./config/db.relations');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
@@ -22,12 +24,13 @@ app.use(cors());
 
 app.use('/auth', authRoutes);
 
-
 app.use('/api', routes);
 app.use('/api/user', userRoutes);
 app.use('/api/penalty', penaltyRoutes);
 app.use('/api/person', personRoutes);
 app.use('/api/province', provinceRoutes);
+
+
 
 app.listen(PORT, () => {
   console.log(`Server listeniong on ${PORT}`);

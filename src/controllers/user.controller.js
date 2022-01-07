@@ -4,6 +4,7 @@ const Person = require('../models').Person;
 var jwt = require('jsonwebtoken');
 const config = require('../config/config');
 const nodemailer = require('../config/nodemailer.config');
+const db = require('../models/index');
 
 //create and save user
 exports.userLogin = (req, res) => {
@@ -40,45 +41,56 @@ exports.userLogin = (req, res) => {
     });
 };
 
-exports.registerUser = (req, res) => {
-  const user = {
-    PersonId: req.body.persona.id,
-    Username: req.body.username,
-    Password: req.body.password,
-    Email: req.body.email,
-    UserTypeId: 2,
-  };
+exports.registerUser = async (req, res) => {
+  try {
+    const userobj = {
+      PersonId: req.body.persona.id,
+      Username: req.body.username,
+      Password: req.body.password,
+      Email: req.body.email,
+      UserTypeId: 2,
+    };
+    if (!Object.values(userobj).every((o) => o !== null)) {
+      return res.status(400).send({
+        message: 'Content can not be empty!',
+      });
+    }
+    // const t = await Sequelize.transaction();
 
-  if (!Object.values(user).every((o) => o !== null)) {
-    return res.status(400).send({
-      message: 'Content can not be empty!',
-    });
-  }
-  AppUser.create(user)
-    .then((user) => {
+    const result = await db.sequelize.transaction(async (t) => {
+      const user = await AppUser.create(userobj, { transaction: t });
+      if (!user) {
+        throw new Error('Some error occurred while creating the User.');
+      }
       const token_s = jwt.sign({ email: user.email }, config.secret);
-
-      const token = {
+      if (!token_s) {
+        throw new Error('Some error occurred while generating the Token.');
+      }
+      const tokenobj = {
         AppUserId: user.Id,
         Token: token_s,
       };
-      Token.create(token)
-        .then((data) => {
-          nodemailer.sendConfirmationEmail(user.Username, user.Email, data.Token, req);
-          return res.status(200).send(user);
-        })
-        .catch((err) => {
-          user.destroy();
-          return res.status(500).send({
-            message: err.message || 'Some error occurred while creating the User.',
-          });
-        });
-    })
-    .catch((err) => {
-      return res.status(500).send({
-        message: err.message || 'Some error occurred while creating the User.',
-      });
+
+      const token = await Token.create(tokenobj, { transaction: t });
+
+      if (!token) {
+        throw new Error('Some error occurred while creating the Token.');
+      }
+
+      const result_email = await nodemailer.sendConfirmationEmail(user, token, req);
+
+      if (!result_email) {
+        throw new Error('Some error occurred while sending the email.');
+      }
+
+      return user;
     });
+    return res.status(200).send(result);
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message,
+    });
+  }
 };
 
 exports.verifyUser = (req, res) => {
