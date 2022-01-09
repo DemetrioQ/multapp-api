@@ -122,3 +122,28 @@ exports.verifyUser = (req, res) => {
       });
     });
 };
+
+exports.getUserByPersonId = (req, res) => {
+  const personId = req.params.id;
+  if (!personId) {
+    res.status(400).send({
+      message: 'Content can not be empty!',
+    });
+    return;
+  }
+  
+  AppUser.findOne({ where: { PersonId: personId }, attributes: { exclude: ['DocumentTypeId', 'PersonTypeId', 'CreatedDate'] } })
+    .then((user) => {
+      if (!user) {
+        return res.status(401).send({ error: 'Invalid Document' });
+      }
+
+      return res.status(200).send(user);
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || 'Some error occurred while searching the Person.',
+      });
+    });
+  
+};

@@ -11,4 +11,8 @@ router.post('/register', (req, res) => {
   userController.registerUser(req, res);
 });
 
+router.get('/find/:id', (req, res) => {
+  userController.getUserByPersonId(req, res);
+});
+
 module.exports = router;
