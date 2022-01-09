@@ -5,7 +5,7 @@ const user = config.user;
 const pass = config.pass;
 
 const transport = nodemailer.createTransport({
-  service: 'Gmail',
+  service: 'gmail',
   auth: {
     user: user,
     pass: pass,
@@ -13,7 +13,7 @@ const transport = nodemailer.createTransport({
 });
 
 exports.sendConfirmationEmail = async (dataUser, dataToken, req) => {
-  return new Promise((resolve, reject)=>{
+  return new Promise((resolve, reject) => {
     transport
       .sendMail({
         from: config.user,
@@ -31,6 +31,5 @@ exports.sendConfirmationEmail = async (dataUser, dataToken, req) => {
       .catch((err) => {
         reject(err);
       });
-  })
-  
+  });
 };
